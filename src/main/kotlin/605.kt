@@ -2,11 +2,16 @@ fun main() {
     val flowerbed = intArrayOf(0)
     val n = 1
     println(canPlaceFlowers(flowerbed, n))
-    // 1 0 1 0 0 0 1 true
-    // 1 0 1 0 1 0 1 true
+
 }
 
-
+// todo: can be done with O(n) complexity by creating a new
+// array which has 0 at the beginning and end so the size of that
+// array will be flowerbed+2
+// we will iterate through the original values in the array
+// and use the usual logic to check for insertion (see 3rd if)
+// if insertion takes place we decrement n and after the iteration
+// over the array is completed and n=0 then all were inserted otherwise not
 fun canPlaceFlowers(flowerbed: IntArray, n: Int): Boolean {
 
     if (flowerbed.size == 1) {
