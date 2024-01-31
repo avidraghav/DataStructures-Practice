@@ -2,14 +2,14 @@ package Stack
 
 class StackImpl<T : Any> : Stack<T>{
 
-    private var storage = arrayListOf<T>()
+    private var storage = mutableListOf<T>()
 
     override fun toString() = buildString {
-        appendLine("----top----")
+       // appendLine("----top----")
         storage.asReversed().forEach {
-            appendLine("$it")
+            append("$it")
         }
-        appendLine("----bottom------")
+   //     appendLine("----bottom------")
     }
 
     // adds an item to the stack in O(1) time
