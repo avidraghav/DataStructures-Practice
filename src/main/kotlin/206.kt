@@ -8,6 +8,7 @@ fun main() {
     println(reverseList(list.head))
 }
 
+// Time: O(n) Space: O(1)
 fun reverseList(head: Node<Int>?): Node<Int>? {
 
     if (head?.next == null) {
