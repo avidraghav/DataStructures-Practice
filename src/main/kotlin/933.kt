@@ -10,7 +10,7 @@ class RecentCounter() {
     fun ping(t: Int): Int {
         que.add(t)
         if (t > 3000) {
-            while (que.peek() < (t - 3000)) {
+            while (que.peek()!=null && que.peek()!! < (t - 3000)) {
                 que.remove()
             }
         }

@@ -18,12 +18,20 @@ class QueueImpl<T> : Queue<T> {
         size++
     }
 
-    override fun remove() {
-        storage.removeFirst()
-        size--
+    override fun remove(): T? {
+        val itemToRemoved = peek()
+        return if (itemToRemoved != null) {
+            storage.removeFirst()
+            size--
+            itemToRemoved
+        } else {
+            null
+        }
     }
 
-    override fun peek(): T {
+    override fun peek(): T? {
+        if (size == 0)
+            return null
         return storage.first()
     }
 
