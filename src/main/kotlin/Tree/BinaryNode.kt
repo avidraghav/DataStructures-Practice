@@ -3,6 +3,7 @@ package Tree
 import Queue.QueueImpl
 
 typealias BinaryNodeVisitor<T> = (T) -> Unit
+typealias BinaryNodeVisitor2<T> = (BinaryNode<T>) -> Unit
 
 class BinaryNode<T>(
     private var value: T,
@@ -67,6 +68,12 @@ class BinaryNode<T>(
         visit(value)
         leftChild?.traversePreOrderWithNull(visit) ?: visit(null)
         rightChild?.traversePreOrderWithNull(visit) ?: visit(null)
+    }
+
+    fun traversePreOrderWithNull2(visit: BinaryNodeVisitor2<T>) {
+        visit(this)
+        leftChild?.traversePreOrderWithNull2(visit) ?: visit(this)
+        rightChild?.traversePreOrderWithNull2(visit) ?: visit(this)
     }
 
     fun serialize(): MutableList<T?> {
