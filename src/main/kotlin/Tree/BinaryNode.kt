@@ -4,7 +4,7 @@ import Queue.QueueImpl
 
 typealias BinaryNodeVisitor<T> = (T) -> Unit
 
-class BinaryNode<T : Any>(
+class BinaryNode<T>(
     private var value: T,
     private var leftChild: BinaryNode<T>? = null,
     private var rightChild: BinaryNode<T>? = null
@@ -62,6 +62,30 @@ class BinaryNode<T : Any>(
         }
 
     }
+
+    fun traversePreOrderWithNull(visit: BinaryNodeVisitor<T?>) {
+        visit(value)
+        leftChild?.traversePreOrderWithNull(visit) ?: visit(null)
+        rightChild?.traversePreOrderWithNull(visit) ?: visit(null)
+    }
+
+    fun serialize(): MutableList<T?> {
+        val list = mutableListOf<T?>()
+        traversePreOrderWithNull {
+            list.add(it)
+        }
+        return list
+    }
+
+    fun deserialize(list: MutableList<T?>): BinaryNode<T?>? {
+        // 1
+        val rootValue = list.removeFirst() ?: return null
+        // 2
+        val root = BinaryNode<T?>(rootValue)
+        root.leftChild = deserialize(list)
+        root.rightChild = deserialize(list)
+        return root
+    }
 }
 
 
@@ -85,25 +109,36 @@ fun main() {
 
     three.addLeft(six)
 
-    print("In-Order ")
-    tree.traverseInOrder {
-        print("$it  ")
+    val preOrderTraversal = tree.serialize()
+    preOrderTraversal.forEach {
+        print("$it ")
     }
-    println()
-    print("Pre-Order ")
-    tree.traversePreOrder {
-        print("$it  ")
+    println("-------------------")
+    val deserializedTree = tree.deserialize(preOrderTraversal)
+    deserializedTree?.traversePreOrder {
+        print("$it ")
     }
-    println()
 
-    print("Post-Order ")
-    tree.traversePostOrder {
-        print("$it  ")
-    }
-    println()
 
-    println("In-Level ")
-    tree.traverseInLevel {
-        print("$it  ")
-    }
+//    print("In-Order ")
+//    tree.traverseInOrder {
+//        print("$it  ")
+//    }
+//    println()
+//    print("Pre-Order ")
+//    tree.traversePreOrder {
+//        print("$it  ")
+//    }
+//    println()
+//
+//    print("Post-Order ")
+//    tree.traversePostOrder {
+//        print("$it  ")
+//    }
+//    println()
+//
+//    println("In-Level ")
+//    tree.traverseInLevel {
+//        print("$it  ")
+//    }
 }
