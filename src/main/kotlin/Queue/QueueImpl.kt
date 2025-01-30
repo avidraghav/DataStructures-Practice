@@ -35,4 +35,11 @@ class QueueImpl<T> : Queue<T> {
         return storage.first()
     }
 
+    override fun addAll(element: List<T>) {
+        element.forEach { e->
+            storage.add(e)
+            size++
+        }
+    }
+
 }
