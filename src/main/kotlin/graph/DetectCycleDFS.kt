@@ -1,7 +1,5 @@
 package graph
 
-import java.util.*
-
 fun main() {
 
 //    2 —— 5
@@ -38,36 +36,26 @@ fun main() {
     )
     val source = 1
 
-
-    println(isCyclicBfs(source, graph))
+    val visited = MutableList(graph.size + 1) { false }
+    visited[source] = true
+    println( isCyclicDfs(NodeDfs(parent = null, value = source), graph, visited))
 }
 
-fun isCyclicBfs(source: Int, graph: Map<Int, List<Int>>): Boolean {
-
-    val visited = MutableList(graph.size + 1) { false }
-
-    // Add node with their parent
-    val q = ArrayDeque<NodeBfs>()
-
-    q.add(NodeBfs(null, source))
-    visited[source] = true
-
-    while (q.isNotEmpty()) {
-        graph[q.first.value]?.forEach { neighbour ->
-            if (!visited[neighbour]) {
-                visited[neighbour] = true
-                q.add(NodeBfs(parent = q.first.value, value = neighbour))
-            } else if (q.first.parent != neighbour) {
-                return true
-            }
+fun isCyclicDfs(source: NodeDfs, graph: Map<Int, List<Int>>, visited: MutableList<Boolean>): Boolean {
+    //print(source)
+    graph[source.value]?.forEach { neighbour ->
+        if (!visited[neighbour]) {
+            visited[neighbour] = true
+            isCyclicDfs(NodeDfs(parent = source.value, value = neighbour), graph, visited)
+        } else if (neighbour != source.parent) {
+            return true
         }
-        q.remove()
     }
 
     return false
 }
 
-data class NodeBfs(
+data class NodeDfs(
     val parent: Int?,
     val value: Int,
 )
