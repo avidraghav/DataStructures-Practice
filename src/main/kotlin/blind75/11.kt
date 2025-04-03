@@ -1,4 +1,4 @@
-package blind75.array
+package blind75
 
 fun main() {
     val height = intArrayOf(1, 8, 6, 2, 5, 4, 8, 3, 7)
