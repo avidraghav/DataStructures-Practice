@@ -2,7 +2,8 @@ package LinkedList
 
 data class Node<T : Any>(
     var value: T,
-    var next: Node<T>? = null
+    var next: Node<T>? = null,
+    var prev: Node<T>? = null,
 ) {
     override fun toString(): String {
         return if (next != null) {
